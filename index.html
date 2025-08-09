@@ -885,11 +885,10 @@
 
             // فرم استرداد
             document.getElementById('refundForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
                 const ticketDate = document.getElementById('ticketDate').value;
                 
                 if (!ticketDate || !ticketDate.match(/^\d{4}\/\d{2}\/\d{2}$/)) {
+                    e.preventDefault();
                     alert('لطفاً تاریخ بلیط را در فرمت صحیح وارد کنید (مثال: 1404/05/28)');
                     return;
                 }
@@ -899,25 +898,46 @@
                 submitBtn.textContent = 'در حال ارسال...';
                 submitBtn.disabled = true;
                 
+                // تولید کد پیگیری و اضافه کردن به فرم
+                const trackingCode = Math.random().toString(36).substr(2, 9).toUpperCase();
+                
+                // اضافه کردن کد پیگیری به فرم
+                let trackingInput = document.createElement('input');
+                trackingInput.type = 'hidden';
+                trackingInput.name = 'generatedTrackingCode';
+                trackingInput.value = trackingCode;
+                this.appendChild(trackingInput);
+                
+                // اضافه کردن نوع فرم
+                let formTypeInput = document.createElement('input');
+                formTypeInput.type = 'hidden';
+                formTypeInput.name = 'formType';
+                formTypeInput.value = 'refund';
+                this.appendChild(formTypeInput);
+                
+                // نمایش پیام موفقیت قبل از ارسال
                 setTimeout(() => {
-                    const trackingCode = Math.random().toString(36).substr(2, 9).toUpperCase();
-                    
                     alert(`درخواست شما با موفقیت ثبت شد.\nکد پیگیری: ${trackingCode}\nتاریخ بلیط: ${ticketDate}\n\nلطفاً این کد را یادداشت کنید.`);
                     
-                    this.reset();
+                    // فرم به طور خودکار ارسال خواهد شد
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                }, 2000);
+                }, 1000);
             });
 
             // فرم پیگیری
             document.getElementById('trackingForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
                 const submitBtn = this.querySelector('.submit-btn');
                 const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'در حال جستجو...';
                 submitBtn.disabled = true;
+                
+                // اضافه کردن نوع فرم
+                let formTypeInput = document.createElement('input');
+                formTypeInput.type = 'hidden';
+                formTypeInput.name = 'formType';
+                formTypeInput.value = 'tracking';
+                this.appendChild(formTypeInput);
                 
                 const resultDiv = document.getElementById('trackingResult');
                 
@@ -927,7 +947,9 @@
                     
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                }, 1500);
+                    
+                    // فرم به طور خودکار ارسال خواهد شد
+                }, 1000);
             });
         });
     </script>
