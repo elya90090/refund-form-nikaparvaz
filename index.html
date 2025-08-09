@@ -885,10 +885,11 @@
 
             // فرم استرداد
             document.getElementById('refundForm').addEventListener('submit', function(e) {
+                e.preventDefault(); // جلوگیری از ارسال معمولی فرم
+                
                 const ticketDate = document.getElementById('ticketDate').value;
                 
                 if (!ticketDate || !ticketDate.match(/^\d{4}\/\d{2}\/\d{2}$/)) {
-                    e.preventDefault();
                     alert('لطفاً تاریخ بلیط را در فرمت صحیح وارد کنید (مثال: 1404/05/28)');
                     return;
                 }
@@ -898,58 +899,67 @@
                 submitBtn.textContent = 'در حال ارسال...';
                 submitBtn.disabled = true;
                 
-                // تولید کد پیگیری و اضافه کردن به فرم
-                const trackingCode = Math.random().toString(36).substr(2, 9).toUpperCase();
+                // جمع‌آوری داده‌های فرم
+                const formData = new FormData(this);
+                formData.append('formType', 'refund');
                 
-                // اضافه کردن کد پیگیری به فرم
-                let trackingInput = document.createElement('input');
-                trackingInput.type = 'hidden';
-                trackingInput.name = 'generatedTrackingCode';
-                trackingInput.value = trackingCode;
-                this.appendChild(trackingInput);
-                
-                // اضافه کردن نوع فرم
-                let formTypeInput = document.createElement('input');
-                formTypeInput.type = 'hidden';
-                formTypeInput.name = 'formType';
-                formTypeInput.value = 'refund';
-                this.appendChild(formTypeInput);
-                
-                // نمایش پیام موفقیت قبل از ارسال
-                setTimeout(() => {
-                    alert(`درخواست شما با موفقیت ثبت شد.\nکد پیگیری: ${trackingCode}\nتاریخ بلیط: ${ticketDate}\n\nلطفاً این کد را یادداشت کنید.`);
-                    
-                    // فرم به طور خودکار ارسال خواهد شد
+                // ارسال با fetch
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert(`درخواست شما با موفقیت ثبت شد.\nتاریخ بلیط: ${ticketDate}\n\nدرخواست شما در حال بررسی است.`);
+                        this.reset();
+                    } else {
+                        alert('خطا در ارسال درخواست. لطفاً مجدداً تلاش کنید.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('خطا در ارسال درخواست. لطفاً مجدداً تلاش کنید.');
+                })
+                .finally(() => {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                }, 1000);
+                });
             });
 
             // فرم پیگیری
             document.getElementById('trackingForm').addEventListener('submit', function(e) {
+                e.preventDefault(); // جلوگیری از ارسال معمولی فرم
+                
                 const submitBtn = this.querySelector('.submit-btn');
                 const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'در حال جستجو...';
                 submitBtn.disabled = true;
                 
-                // اضافه کردن نوع فرم
-                let formTypeInput = document.createElement('input');
-                formTypeInput.type = 'hidden';
-                formTypeInput.name = 'formType';
-                formTypeInput.value = 'tracking';
-                this.appendChild(formTypeInput);
+                // جمع‌آوری داده‌های فرم
+                const formData = new FormData(this);
+                formData.append('formType', 'tracking');
                 
-                const resultDiv = document.getElementById('trackingResult');
-                
-                setTimeout(() => {
+                // ارسال با fetch
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    const resultDiv = document.getElementById('trackingResult');
                     resultDiv.style.display = 'block';
-                    resultDiv.innerHTML = '<h4>نتیجه پیگیری:</h4><p>اطلاعات درخواست شما در حال بررسی است...</p>';
-                    
+                    resultDiv.innerHTML = `<h4>نتیجه پیگیری:</h4><p>${data}</p>`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const resultDiv = document.getElementById('trackingResult');
+                    resultDiv.style.display = 'block';
+                    resultDiv.innerHTML = '<h4>نتیجه پیگیری:</h4><p>خطا در دریافت اطلاعات. لطفاً مجدداً تلاش کنید.</p>';
+                })
+                .finally(() => {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                    
-                    // فرم به طور خودکار ارسال خواهد شد
-                }, 1000);
+                });
             });
         });
     </script>
