@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فرم استرداد وجه و پیگیری</title>
+    <title>فرم استرداد وجه و پیگیری نیکا پرواز</title>
     <style>
         * {
             margin: 0;
@@ -390,12 +390,48 @@
                 font-size: 13px;
             }
         }
+        
+        /* استایل فوتر */
+        .footer {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+        }
+        
+        .footer p {
+            font-size: 14px;
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .footer .developer {
+            color: #8B5CF6;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer .developer:hover {
+            color: #EC4899;
+        }
+        
+        @media (max-width: 480px) {
+            .footer {
+                padding: 15px;
+            }
+            
+            .footer p {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>فرم استرداد وجه و پیگیری</h1>
+            <h1>فرم استرداد وجه و پیگیری نیکا پرواز</h1>
             <p>برای دریافت خدمات بهتر، لطفاً اطلاعات را کامل وارد کنید</p>
         </div>
         
@@ -405,7 +441,7 @@
         </div>
         
         <div id="refund" class="tab-content active">
-            <form id="refundForm">
+            <form id="refundForm" action="https://elya1005.app.n8n.cloud/webhook/bf900a4f-bb73-4070-b792-9636e86379ec" method="POST">
                 <!-- مشخصات ثبت‌نام‌کننده -->
                 <div class="form-section">
                     <h3>مشخصات ثبت‌نام‌کننده</h3>
@@ -537,7 +573,7 @@
         
         <!-- بخش پیگیری -->
         <div id="tracking" class="tab-content">
-            <form id="trackingForm">
+            <form id="trackingForm" action="https://elya1005.app.n8n.cloud/webhook/bf900a4f-bb73-4070-b792-9636e86379ec" method="POST">
                 <div class="form-section">
                     <h3>پیگیری وضعیت درخواست</h3>
                     <div class="form-row">
@@ -560,6 +596,11 @@
                 </div>
             </form>
         </div>
+    </div>
+    
+    <!-- فوتر -->
+    <div class="footer">
+        <p>طراح و توسعه دهنده <a href="#" class="developer">@raz3400</a></p>
     </div>
     
     <script>
