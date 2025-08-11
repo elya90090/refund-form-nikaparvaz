@@ -18,13 +18,205 @@
             padding: 25px;
         }
         
+        .main-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 180px 1fr 180px;
+            grid-template-areas: "sidebar-left main sidebar-right";
+            gap: 15px;
+        }
+        
+        .sidebar-left {
+            grid-area: sidebar-left;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .sidebar-right {
+            grid-area: sidebar-right;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .main-content {
+            grid-area: main;
+        }
+        
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+        }
+        
+        /* تبلیغات سمت چپ - رزرواسیون و خدمات */
+        .reservation-ad {
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .reservation-ad:hover {
+            transform: translateY(-5px);
+        }
+        
+        .reservation-ad::before {
+            content: '✈️';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .reservation-ad h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .reservation-ad p {
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .reservation-ad .website {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .travel-ad {
+            background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .travel-ad:hover {
+            transform: translateY(-5px);
+        }
+        
+        .travel-ad::before {
+            content: '🌍';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            animation: rotate 4s linear infinite;
+        }
+        
+        .travel-ad h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .travel-ad p {
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .travel-ad .service {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin: 5px;
+            display: inline-block;
+            font-size: 11px;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        
+        /* تبلیغات سمت راست - CIP */
+        .cip-ad {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cip-ad:hover {
+            transform: translateY(-5px);
+        }
+        
+        .cip-ad::before {
+            content: '👑';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        .cip-ad h3 {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .cip-ad p {
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .cip-ad .highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        /* انیمیشن‌ها */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
         }
         
         .header {
@@ -333,10 +525,92 @@
             border: 1px solid #6b7280;
         }
         
-        /* ریسپانسیو */
+        /* استایل فوتر */
+        .footer {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            grid-column: 1 / -1;
+        }
+        
+        .footer p {
+            font-size: 14px;
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .footer .developer {
+            color: #8B5CF6;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer .developer:hover {
+            color: #EC4899;
+        }
+        
+        /* ریسپانسیو تبلت */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "main"
+                    "sidebar-left"
+                    "sidebar-right";
+                gap: 15px;
+            }
+            
+            .sidebar-left,
+            .sidebar-right {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .cip-ad,
+            .reservation-ad,
+            .travel-ad {
+                padding: 15px;
+            }
+            
+            .cip-ad h3 {
+                font-size: 16px;
+            }
+            
+            .reservation-ad h3,
+            .travel-ad h3 {
+                font-size: 14px;
+            }
+        }
+        
+        /* ریسپانسیو موبایل */
         @media (max-width: 768px) {
             body {
                 padding: 15px;
+            }
+            
+            .main-layout {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "main"
+                    "sidebar-left"
+                    "sidebar-right";
+                gap: 10px;
+            }
+            
+            .sidebar-left {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            
+            .sidebar-right {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
             }
             
             .container {
@@ -387,12 +661,44 @@
             .form-group select,
             .form-group textarea {
                 padding: 12px;
-                font-size: 16px; /* جلوگیری از زوم در iOS */
+                font-size: 16px;
             }
             
             .submit-btn {
                 padding: 15px;
                 font-size: 16px;
+            }
+            
+            .cip-ad,
+            .reservation-ad,
+            .travel-ad {
+                padding: 12px;
+                border-radius: 10px;
+            }
+            
+            .cip-ad h3 {
+                font-size: 14px;
+                padding: 8px 12px;
+                margin-bottom: 10px;
+            }
+            
+            .cip-ad p,
+            .reservation-ad p,
+            .travel-ad p {
+                font-size: 11px;
+                margin-bottom: 6px;
+            }
+            
+            .reservation-ad h3,
+            .travel-ad h3 {
+                font-size: 13px;
+                margin-bottom: 8px;
+            }
+            
+            .travel-ad .service {
+                font-size: 9px;
+                padding: 4px 6px;
+                margin: 2px;
             }
         }
         
@@ -424,35 +730,7 @@
                 padding: 12px;
                 font-size: 13px;
             }
-        }
-        
-        /* استایل فوتر */
-        .footer {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            padding: 20px;
-            text-align: center;
-            color: white;
-            margin-top: 40px;
-        }
-        
-        .footer p {
-            font-size: 14px;
-            margin: 0;
-            opacity: 0.9;
-        }
-        
-        .footer .developer {
-            color: #8B5CF6;
-            font-weight: bold;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer .developer:hover {
-            color: #EC4899;
-        }
-        
-        @media (max-width: 480px) {
+            
             .footer {
                 padding: 15px;
             }
@@ -460,182 +738,242 @@
             .footer p {
                 font-size: 12px;
             }
+            
+            .sidebar-left,
+            .sidebar-right {
+                grid-template-columns: 1fr;
+            }
+            
+            .cip-ad h3 {
+                font-size: 12px;
+            }
+            
+            .reservation-ad h3,
+            .travel-ad h3 {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>فرم استرداد وجه و پیگیری نیکا پرواز</h1>
-            <p>برای دریافت خدمات بهتر، لطفاً اطلاعات را کامل وارد کنید</p>
+    <div class="main-layout">
+        <!-- تبلیغات سمت چپ - رزرواسیون و خدمات -->
+        <div class="sidebar-left">
+            <div class="reservation-ad" onclick="window.open('https://parvazyab24.com', '_blank')">
+                <h3>سیستم رزرواسیون آنلاین</h3>
+                <p>وایت لیبل</p>
+                <p>وب سرویس</p>
+                <div class="website">
+                    WWW.TRIPCENTER.IR
+                </div>
+            </div>
+            <div class="travel-ad" onclick="window.open('https://parvazyab24.com', '_blank')">
+                <h3>خدمات مسافرتی</h3>
+                <p>ارائه کلیه خدمات:</p>
+                <div class="service">پرواز</div>
+                <div class="service">هتل</div>
+                <div class="service">تور</div>
+                <div class="service">بیمه</div>
+                <div class="service">ویزا</div>
+            </div>
         </div>
         
-        <div class="tabs">
-            <button class="tab-button active" onclick="openTab(event, 'refund')">استرداد وجه</button>
-            <button class="tab-button" onclick="openTab(event, 'tracking')">پیگیری وضعیت</button>
-        </div>
-        
-        <div id="refund" class="tab-content active">
-            <form id="refundForm" action="https://elya1005.app.n8n.cloud/webhook/bf900a4f-bb73-4070-b792-9636e86379ec" method="POST">
-                <!-- مشخصات ثبت‌نام‌کننده -->
-                <div class="form-section">
-                    <h3>مشخصات ثبت‌نام‌کننده</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="fullName">نام و نام خانوادگی <span class="required">*</span></label>
-                            <input type="text" id="fullName" name="fullName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobile">تلفن همراه <span class="required">*</span></label>
-                            <input type="tel" id="mobile" name="mobile" placeholder="09xxxxxxxxx" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="agencyName">نام آژانس</label>
-                            <input type="text" id="agencyName" name="agencyName">
-                        </div>
-                        <div class="form-group">
-                            <label for="serviceType">نوع خدمات <span class="required">*</span></label>
-                            <select id="serviceType" name="serviceType" required>
-                                <option value="">انتخاب کنید</option>
-                                <option value="پرواز">پرواز</option>
-                                <option value="قطار">قطار</option>
-                                <option value="اتوبوس">اتوبوس</option>
-                                <option value="تور">تور</option>
-                                <option value="بیمه مسافرتی">بیمه مسافرتی</option>
-                                <option value="وجه پول">وجه پول</option>
-                            </select>
-                        </div>
-                    </div>
+        <!-- محتوای اصلی -->
+        <div class="main-content">
+            <div class="container">
+                <div class="header">
+                    <h1>فرم استرداد وجه و پیگیری نیکا پرواز</h1>
+                    <p>برای دریافت خدمات بهتر، لطفاً اطلاعات را کامل وارد کنید</p>
                 </div>
                 
-                <!-- مشخصات بلیط -->
-                <div class="form-section">
-                    <h3>مشخصات بلیط</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="passengerName">نام مسافر <span class="required">*</span></label>
-                            <input type="text" id="passengerName" name="passengerName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="passengerMobile">تلفن همراه ثبت شده <span class="required">*</span></label>
-                            <input type="tel" id="passengerMobile" name="passengerMobile" placeholder="09xxxxxxxxx" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="route">مسیر <span class="required">*</span></label>
-                            <input type="text" id="route" name="route" placeholder="مثال: تهران - مشهد" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="referenceNumber">شماره رفرنس <span class="required">*</span></label>
-                            <input type="text" id="referenceNumber" name="referenceNumber" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="purchaseSite">سایت خرید <span class="required">*</span></label>
-                            <select id="purchaseSite" name="purchaseSite" required>
-                                <option value="">انتخاب کنید</option>
-                                <option value="parvazyab24.com">parvazyab24.com</option>
-                                <option value="بدون سایت">بدون سایت</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="airlineName">نام ایرلاین یا شرکت <span class="required">*</span></label>
-                            <input type="text" id="airlineName" name="airlineName" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="cancelReason">دلیل کنسلی <span class="required">*</span></label>
-                            <select id="cancelReason" name="cancelReason" required>
-                                <option value="">انتخاب کنید</option>
-                                <option value="خطای سیستم">خطای سیستم</option>
-                                <option value="خرید ناموفق">خرید ناموفق</option>
-                                <option value="کنسلی مسافر">کنسلی مسافر</option>
-                                <option value="کنسلی ایرلاین">کنسلی ایرلاین</option>
-                                <option value="ابطالی">ابطالی</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="ticketDate">تاریخ بلیط <span class="required">*</span></label>
-                            <div class="date-input">
-                                <input type="text" id="ticketDate" name="ticketDate" placeholder="1404/05/28" pattern="[0-9]{4}/[0-9]{2}/[0-9]{2}" required maxlength="10">
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openTab(event, 'refund')">استرداد وجه</button>
+                    <button class="tab-button" onclick="openTab(event, 'tracking')">پیگیری وضعیت</button>
+                </div>
+                
+                <div id="refund" class="tab-content active">
+                    <form id="refundForm" action="https://elya1005.app.n8n.cloud/webhook/bf900a4f-bb73-4070-b792-9636e86379ec" method="POST">
+                        <!-- مشخصات ثبت‌نام‌کننده -->
+                        <div class="form-section">
+                            <h3>مشخصات ثبت‌نام‌کننده</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">نام و نام خانوادگی <span class="required">*</span></label>
+                                    <input type="text" id="fullName" name="fullName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile">تلفن همراه <span class="required">*</span></label>
+                                    <input type="tel" id="mobile" name="mobile" placeholder="09xxxxxxxxx" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="agencyName">نام آژانس</label>
+                                    <input type="text" id="agencyName" name="agencyName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="serviceType">نوع خدمات <span class="required">*</span></label>
+                                    <select id="serviceType" name="serviceType" required>
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="پرواز">پرواز</option>
+                                        <option value="قطار">قطار</option>
+                                        <option value="اتوبوس">اتوبوس</option>
+                                        <option value="تور">تور</option>
+                                        <option value="بیمه مسافرتی">بیمه مسافرتی</option>
+                                        <option value="وجه پول">وجه پول</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        
+                        <!-- مشخصات خدمات -->
+                        <div class="form-section">
+                            <h3>مشخصات خدمات</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="passengerName">نام و نام خانوادگی مسافر <span class="required">*</span></label>
+                                    <input type="text" id="passengerName" name="passengerName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="passengerMobile">تلفن همراه ثبت شده <span class="required">*</span></label>
+                                    <input type="tel" id="passengerMobile" name="passengerMobile" placeholder="09xxxxxxxxx" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="route">مسیر <span class="required">*</span></label>
+                                    <input type="text" id="route" name="route" placeholder="مثال: تهران - مشهد" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="referenceNumber">شماره رفرنس <span class="required">*</span></label>
+                                    <input type="text" id="referenceNumber" name="referenceNumber" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="purchaseSite">سایت خرید <span class="required">*</span></label>
+                                    <select id="purchaseSite" name="purchaseSite" required>
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="parvazyab24.com">parvazyab24.com</option>
+                                        <option value="بدون سایت">بدون سایت</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="airlineName">نام ایرلاین یا شرکت <span class="required">*</span></label>
+                                    <input type="text" id="airlineName" name="airlineName" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cancelReason">دلیل کنسلی <span class="required">*</span></label>
+                                    <select id="cancelReason" name="cancelReason" required>
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="خطای سیستم">خطای سیستم</option>
+                                        <option value="خرید ناموفق">خرید ناموفق</option>
+                                        <option value="کنسلی مسافر">کنسلی مسافر</option>
+                                        <option value="کنسلی ایرلاین یا شرکت">کنسلی ایرلاین یا شرکت</option>
+                                        <option value="ابطالی">ابطالی</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ticketDate">تاریخ بلیط <span class="required">*</span></label>
+                                    <div class="date-input">
+                                        <input type="text" id="ticketDate" name="ticketDate" placeholder="1404/05/28" pattern="[0-9]{4}/[0-9]{2}/[0-9]{2}" required maxlength="10">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- مشخصات حساب -->
+                        <div class="form-section">
+                            <h3>مشخصات حساب</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="accountHolder">نام و نام خانوادگی صاحب حساب <span class="required">*</span></label>
+                                    <input type="text" id="accountHolder" name="accountHolder" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cardNumber">شماره کارت که خرید انجام شده <span class="required">*</span></label>
+                                    <input type="text" id="cardNumber" name="cardNumber" placeholder="0000-0000-0000-0000" required>
+                                    <div class="card-validation-error" id="cardError"></div>
+                                    <div class="card-validation-success" id="cardSuccess"></div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="bankName">نام بانک <span class="required">*</span></label>
+                                    <input type="text" id="bankName" name="bankName" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <div class="form-group">
+                                <label for="description">توضیحات <span class="required">*</span></label>
+                                <textarea id="description" name="description" placeholder="توضیحات اضافی خود را اینجا بنویسید..." required></textarea>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="acceptRules" name="acceptRules" required>
+                                <label for="acceptRules">قوانین و مقررات را مطالعه کرده و می‌پذیرم <span class="required">*</span></label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">ارسال درخواست</button>
+                    </form>
                 </div>
                 
-                <!-- مشخصات حساب -->
-                <div class="form-section">
-                    <h3>مشخصات حساب</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="accountHolder">نام صاحب حساب <span class="required">*</span></label>
-                            <input type="text" id="accountHolder" name="accountHolder" required>
+                <!-- بخش پیگیری -->
+                <div id="tracking" class="tab-content">
+                    <form id="trackingForm" action="https://elya1005.app.n8n.cloud/webhook/bf900a4f-bb73-4070-b792-9636e86379ec" method="POST">
+                        <div class="form-section">
+                            <h3>پیگیری وضعیت درخواست</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="trackingCode">شماره پیگیری <span class="required">*</span></label>
+                                    <input type="text" id="trackingCode" name="trackingCode" placeholder="کد پیگیری را وارد کنید" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="trackingMobile">شماره موبایل ثبت‌نام‌کننده <span class="required">*</span></label>
+                                    <input type="tel" id="trackingMobile" name="trackingMobile" placeholder="09xxxxxxxxx" required>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="cardNumber">شماره کارت که خرید انجام شده <span class="required">*</span></label>
-                            <input type="text" id="cardNumber" name="cardNumber" placeholder="0000-0000-0000-0000" required>
-                            <div class="card-validation-error" id="cardError"></div>
-                            <div class="card-validation-success" id="cardSuccess"></div>
+                        
+                        <button type="submit" class="submit-btn">جستجو</button>
+                        
+                        <div class="tracking-result" id="trackingResult">
+                            <!-- نتایج پیگیری اینجا نمایش داده می‌شود -->
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="bankName">نام بانک <span class="required">*</span></label>
-                            <input type="text" id="bankName" name="bankName" required>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-                
-                <div class="form-section">
-                    <div class="form-group">
-                        <label for="description">توضیحات <span class="required">*</span></label>
-                        <textarea id="description" name="description" placeholder="توضیحات اضافی خود را اینجا بنویسید..." required></textarea>
-                    </div>
-                    
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="acceptRules" name="acceptRules" required>
-                        <label for="acceptRules">قوانین و مقررات را مطالعه کرده و می‌پذیرم <span class="required">*</span></label>
-                    </div>
-                </div>
-                
-                <button type="submit" class="submit-btn">ارسال درخواست</button>
-            </form>
+            </div>
         </div>
         
-        <!-- بخش پیگیری -->
-        <div id="tracking" class="tab-content">
-            <form id="trackingForm" action="https://elya1005.app.n8n.cloud/webhook/bf900a4f-bb73-4070-b792-9636e86379ec" method="POST">
-                <div class="form-section">
-                    <h3>پیگیری وضعیت درخواست</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="trackingCode">شماره پیگیری <span class="required">*</span></label>
-                            <input type="text" id="trackingCode" name="trackingCode" placeholder="کد پیگیری را وارد کنید" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="trackingMobile">شماره موبایل ثبت‌نام‌کننده <span class="required">*</span></label>
-                            <input type="tel" id="trackingMobile" name="trackingMobile" placeholder="09xxxxxxxxx" required>
-                        </div>
-                    </div>
+        <!-- تبلیغات سمت راست - CIP -->
+        <div class="sidebar-right">
+            <div class="cip-ad" onclick="window.open('https://parvazyab24.com', '_blank')">
+                <h3>CIP</h3>
+                <p>در حین خرید پرواز</p>
+                <p>تا یک کلیک</p>
+                <div class="highlight">
+                    CIP خود را رزرو کنید
                 </div>
-                
-                <button type="submit" class="submit-btn">جستجو</button>
-                
-                <div class="tracking-result" id="trackingResult">
-                    <!-- نتایج پیگیری اینجا نمایش داده می‌شود -->
+            </div>
+            <div class="cip-ad" onclick="window.open('https://parvazyab24.com', '_blank')">
+                <h3>CIP LOUNGE</h3>
+                <p>خدمات VIP فرودگاهی</p>
+                <p>سالن انتظار اختصاصی</p>
+                <div class="highlight">
+                    تجربه سفری لوکس
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
-    
-    <!-- فوتر -->
-    <div class="footer">
-        <p>طراح و توسعه دهنده <a href="#" class="developer">@raz3400</a></p>
+        
+        <!-- فوتر -->
+        <div class="footer">
+            <p>طراح و توسعه دهنده <a href="#" class="developer">@raz3400</a></p>
+        </div>
     </div>
     
     <script>
@@ -824,32 +1162,49 @@
             return sum % 10 === 0;
         }
 
-        // تشخیص نوع کارت بانکی
+        // تشخیص نوع کارت بانکی - اصلاح شده برای رسالت
         function getCardType(cardNumber) {
             const cardPatterns = {
-                'بانک ملی': /^627760/,
-                'بانک صادرات': /^627648/,
-                'بانک ملت': /^610433/,
-                'بانک پارسیان': /^622106/,
-                'بانک پاسارگاد': /^639347/,
-                'بانک کارآفرین': /^627381/,
-                'بانک سامان': /^621986/,
-                'بانک سینا': /^639607/,
-                'بانک سرمایه': /^606274/,
-                'بانک تجارت': /^627353/,
-                'بانک رفاه': /^621986/,
-                'بانک انصار': /^627616/,
-                'بانک ایران زمین': /^627884/,
-                'بانک قوامین': /^639370/,
-                'بانک کشاورزی': /^639607/,
-                'بانک مسکن': /^627381/,
-                'پست بانک': /^627760/,
-                'بانک دی': /^627412/
+                'بانک رسالت': [/^504172/, /^627381/, /^639607/],
+                'بانک ملی': [/^627760/, /^627412/, /^622106/],
+                'بانک صادرات': [/^627648/, /^627593/],
+                'بانک ملت': [/^610433/, /^991975/],
+                'بانک پارسیان': [/^622106/, /^639194/],
+                'بانک پاسارگاد': [/^639347/, /^502908/],
+                'بانک کارآفرین': [/^627381/, /^505785/],
+                'بانک سامان': [/^621986/, /^639607/],
+                'بانک سینا': [/^639607/, /^639194/],
+                'بانک سرمایه': [/^606274/, /^627593/],
+                'بانک تجارت': [/^627353/, /^585983/],
+                'بانک رفاه': [/^621986/, /^627381/],
+                'بانک انصار': [/^627616/, /^505785/],
+                'بانک ایران زمین': [/^627884/, /^505785/],
+                'بانک قوامین': [/^639370/, /^639607/],
+                'بانک کشاورزی': [/^639607/, /^627381/],
+                'بانک مسکن': [/^627381/, /^627760/],
+                'پست بانک': [/^627760/, /^639347/],
+                'بانک دی': [/^627412/, /^639607/],
+                'بانک اقتصاد نوین': [/^627412/, /^622106/],
+                'بانک شهر': [/^502806/, /^627412/],
+                'بانک توسعه تعاون': [/^627381/, /^502908/],
+                'بانک صنعت و معدن': [/^627381/, /^639607/],
+                'بانک گردشگری': [/^627381/, /^639194/],
+                'بانک حکمت ایرانیان': [/^627381/, /^639607/],
+                'بانک کوثر': [/^627381/, /^639347/],
+                'بانک مهر اقتصاد': [/^639370/, /^627593/],
+                'بانک مهر ایران': [/^606373/, /^639370/],
+                'بانک تات': [/^627648/, /^639607/],
+                'بانک حکمت': [/^636214/, /^627381/],
+                'بانک آینده': [/^636214/, /^627412/],
+                'بانک خاورمیانه': [/^585983/, /^627593/],
+                'بانک نور': [/^507677/, /^627760/]
             };
 
-            for (const [bankName, pattern] of Object.entries(cardPatterns)) {
-                if (pattern.test(cardNumber)) {
-                    return bankName;
+            for (const [bankName, patterns] of Object.entries(cardPatterns)) {
+                for (const pattern of patterns) {
+                    if (pattern.test(cardNumber)) {
+                        return bankName;
+                    }
                 }
             }
 
@@ -887,11 +1242,6 @@
             }
         }
 
-        // تولید کد پیگیری تصادفی (برای تست)
-        function generateTrackingCode() {
-            return 'TRK' + Math.random().toString(36).substr(2, 9).toUpperCase();
-        }
-
         // راه‌اندازی اولیه
         document.addEventListener('DOMContentLoaded', function() {
             // تنظیم فرمت تاریخ شمسی
@@ -922,7 +1272,7 @@
                 });
             });
 
-            // فرم استرداد - کد تصحیح شده
+            // فرم استرداد - پیام ساده شده
             document.getElementById('refundForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -941,17 +1291,13 @@
                 const formData = new FormData(this);
                 formData.append('formType', 'refund');
                 
-                // تولید کد پیگیری
-                const trackingCode = generateTrackingCode();
-                formData.append('generatedTrackingCode', trackingCode);
-                
                 fetch(this.action, {
                     method: 'POST',
                     body: formData
                 })
                 .then(response => {
                     if (response.ok) {
-                        alert(`درخواست شما با موفقیت ثبت شد.\n\nکد پیگیری: ${trackingCode}\nتاریخ بلیط: ${ticketDate}\n\nاین کد را یادداشت کنید تا بتوانید وضعیت درخواست خود را پیگیری کنید.`);
+                        alert('درخواست شما با موفقیت ثبت شد');
                         this.reset();
                         
                         // پاک کردن پیام‌های validation
@@ -975,7 +1321,7 @@
                 });
             });
 
-            // فرم پیگیری - کد کاملاً تصحیح شده
+            // فرم پیگیری - پیام ساده شده
             document.getElementById('trackingForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -987,116 +1333,21 @@
                 const formData = new FormData(this);
                 formData.append('formType', 'tracking');
                 
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('خطا در ارتباط با سرور');
-                    }
-                    return response.text();
-                })
-                .then(data => {
+                // نمایش پیام ساده
+                setTimeout(() => {
                     const resultDiv = document.getElementById('trackingResult');
                     resultDiv.style.display = 'block';
                     
-                    let resultContent = '';
-                    
-                    try {
-                        // سعی کنید JSON parse کنید
-                        const jsonResponse = JSON.parse(data);
-                        
-                        if (jsonResponse.message === "Workflow was started" || jsonResponse.status === "started") {
-                            resultContent = `
-                                <div class="warning-message">
-                                    <h4>⚠️ سیستم پیگیری در حال راه‌اندازی</h4>
-                                    <p><strong>درخواست شما دریافت شد</strong> اما سیستم پیگیری هنوز کاملاً پیکربندی نشده است.</p>
-                                    <p>لطفاً چند دقیقه دیگر مجدداً تلاش کنید یا با پشتیبانی تماس بگیرید.</p>
-                                    <p><strong>کد پیگیری:</strong> ${document.getElementById('trackingCode').value}</p>
-                                </div>
-                            `;
-                        } else if (jsonResponse.found === true || jsonResponse.status === "found") {
-                            // اگر درخواست پیدا شد
-                            resultContent = `
-                                <div class="success-message">
-                                    <h4>✅ درخواست شما یافت شد</h4>
-                                    <p><strong>کد پیگیری:</strong> ${jsonResponse.trackingCode || document.getElementById('trackingCode').value}</p>
-                                    <p><strong>وضعیت:</strong> ${jsonResponse.requestStatus || 'در حال بررسی'}</p>
-                                    <p><strong>تاریخ ثبت:</strong> ${jsonResponse.submitDate || 'نامشخص'}</p>
-                                    <p><strong>نام متقاضی:</strong> ${jsonResponse.applicantName || 'نامشخص'}</p>
-                                    ${jsonResponse.description ? `<p><strong>توضیحات:</strong> ${jsonResponse.description}</p>` : ''}
-                                    ${jsonResponse.estimatedTime ? `<p><strong>زمان تخمینی پاسخ:</strong> ${jsonResponse.estimatedTime}</p>` : ''}
-                                </div>
-                            `;
-                        } else if (jsonResponse.found === false || jsonResponse.status === "not_found") {
-                            // اگر درخواست پیدا نشد
-                            resultContent = `
-                                <div class="error-message">
-                                    <h4>❌ درخواستی با این مشخصات یافت نشد</h4>
-                                    <p>کد پیگیری یا شماره موبایل وارد شده صحیح نیست.</p>
-                                    <p><strong>بررسی کنید:</strong></p>
-                                    <ul style="margin: 10px 0; padding-right: 20px;">
-                                        <li>کد پیگیری را صحیح وارد کرده‌اید</li>
-                                        <li>شماره موبایل همان شماره‌ای است که هنگام ثبت درخواست استفاده کردید</li>
-                                    </ul>
-                                    <p>در صورت اطمینان از صحت اطلاعات، با پشتیبانی تماس بگیرید.</p>
-                                </div>
-                            `;
-                        } else {
-                            // پاسخ نامشخص
-                            resultContent = `
-                                <div class="info-message">
-                                    <h4>📋 اطلاعات دریافت شده</h4>
-                                    <pre style="background: #f8fafc; padding: 10px; border-radius: 5px; overflow-x: auto; font-size: 12px;">${JSON.stringify(jsonResponse, null, 2)}</pre>
-                                </div>
-                            `;
-                        }
-                    } catch (jsonError) {
-                        // اگر JSON نبود، متن ساده بررسی کنید
-                        if (data.includes("Workflow was started") || data.includes("started")) {
-                            resultContent = `
-                                <div class="warning-message">
-                                    <h4>⚠️ سیستم پیگیری فعال نیست</h4>
-                                    <p><strong>درخواست شما دریافت شد</strong> اما سیستم پیگیری هنوز پیکربندی نشده است.</p>
-                                    <p>این پیام نشان می‌دهد که وب‌هوک n8n فقط workflow را شروع کرده و منطق پیگیری را اجرا نکرده است.</p>
-                                    <p><strong>کد پیگیری شما:</strong> ${document.getElementById('trackingCode').value}</p>
-                                    <p>لطفاً با پشتیبانی تماس بگیرید.</p>
-                                </div>
-                            `;
-                        } else {
-                            resultContent = `
-                                <div class="info-message">
-                                    <h4>📋 پاسخ سرور</h4>
-                                    <p>${data}</p>
-                                </div>
-                            `;
-                        }
-                    }
-                    
-                    resultDiv.innerHTML = resultContent;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    const resultDiv = document.getElementById('trackingResult');
-                    resultDiv.style.display = 'block';
                     resultDiv.innerHTML = `
-                        <div class="error-message">
-                            <h4>❌ خطا در دریافت اطلاعات</h4>
-                            <p><strong>علت احتمالی:</strong></p>
-                            <ul style="margin: 10px 0; padding-right: 20px;">
-                                <li>مشکل در اتصال اینترنت</li>
-                                <li>سرور موقتاً در دسترس نیست</li>
-                                <li>مشکل فنی در سیستم</li>
-                            </ul>
-                            <p>لطفاً چند لحظه صبر کرده و مجدداً تلاش کنید.</p>
+                        <div class="info-message">
+                            <h4>📋 وضعیت درخواست</h4>
+                            <p><strong>درخواست شما دریافت شد منتظر پاسخ باشید</strong></p>
                         </div>
                     `;
-                })
-                .finally(() => {
+                    
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                });
+                }, 2000);
             });
         });
     </script>
