@@ -15,7 +15,7 @@
             font-family: Tahoma, Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 25px;
+            padding: 20px;
         }
         
         .container {
@@ -224,14 +224,11 @@
         
         .tracking-result {
             margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
             border-radius: 15px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
             display: none;
-            animation: slideIn 0.5s ease;
-        }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         
         .required {
@@ -301,42 +298,10 @@
             display: none;
         }
         
-        .success-message {
-            padding: 15px;
-            background: #d1fae5;
-            color: #065f46;
-            border-radius: 10px;
-            border: 1px solid #10b981;
-        }
-        
-        .error-message {
-            padding: 15px;
-            background: #fecaca;
-            color: #991b1b;
-            border-radius: 10px;
-            border: 1px solid #ef4444;
-        }
-        
-        .warning-message {
-            padding: 15px;
-            background: #fef3c7;
-            color: #92400e;
-            border-radius: 10px;
-            border: 1px solid #f59e0b;
-        }
-        
-        .info-message {
-            padding: 15px;
-            background: #e5e7eb;
-            color: #374151;
-            border-radius: 10px;
-            border: 1px solid #6b7280;
-        }
-        
         /* ریسپانسیو */
         @media (max-width: 768px) {
             body {
-                padding: 15px;
+                padding: 10px;
             }
             
             .container {
@@ -627,7 +592,8 @@
                 <button type="submit" class="submit-btn">جستجو</button>
                 
                 <div class="tracking-result" id="trackingResult">
-                    <!-- نتایج پیگیری اینجا نمایش داده می‌شود -->
+                    <h4>نتیجه پیگیری:</h4>
+                    <p>اطلاعات درخواست شما در حال بررسی است...</p>
                 </div>
             </form>
         </div>
@@ -887,11 +853,6 @@
             }
         }
 
-        // تولید کد پیگیری تصادفی (برای تست)
-        function generateTrackingCode() {
-            return 'TRK' + Math.random().toString(36).substr(2, 9).toUpperCase();
-        }
-
         // راه‌اندازی اولیه
         document.addEventListener('DOMContentLoaded', function() {
             // تنظیم فرمت تاریخ شمسی
@@ -922,13 +883,12 @@
                 });
             });
 
-            // فرم استرداد - کد تصحیح شده
+            // فرم استرداد
             document.getElementById('refundForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
                 const ticketDate = document.getElementById('ticketDate').value;
                 
                 if (!ticketDate || !ticketDate.match(/^\d{4}\/\d{2}\/\d{2}$/)) {
+                    e.preventDefault();
                     alert('لطفاً تاریخ بلیط را در فرمت صحیح وارد کنید (مثال: 1404/05/28)');
                     return;
                 }
@@ -938,168 +898,60 @@
                 submitBtn.textContent = 'در حال ارسال...';
                 submitBtn.disabled = true;
                 
-                const formData = new FormData(this);
-                formData.append('formType', 'refund');
+                // تولید کد پیگیری و اضافه کردن به فرم
+                const trackingCode = Math.random().toString(36).substr(2, 9).toUpperCase();
                 
-                // تولید کد پیگیری
-                const trackingCode = generateTrackingCode();
-                formData.append('generatedTrackingCode', trackingCode);
+                // اضافه کردن کد پیگیری به فرم
+                let trackingInput = document.createElement('input');
+                trackingInput.type = 'hidden';
+                trackingInput.name = 'generatedTrackingCode';
+                trackingInput.value = trackingCode;
+                this.appendChild(trackingInput);
                 
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert(`درخواست شما با موفقیت ثبت شد.\n\nکد پیگیری: ${trackingCode}\nتاریخ بلیط: ${ticketDate}\n\nاین کد را یادداشت کنید تا بتوانید وضعیت درخواست خود را پیگیری کنید.`);
-                        this.reset();
-                        
-                        // پاک کردن پیام‌های validation
-                        document.getElementById('cardError').style.display = 'none';
-                        document.getElementById('cardSuccess').style.display = 'none';
-                        const indicator = document.querySelector('.card-type-indicator');
-                        if (indicator) {
-                            indicator.classList.remove('show');
-                        }
-                    } else {
-                        alert('خطا در ارسال درخواست. لطفاً مجدداً تلاش کنید.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('خطا در ارسال درخواست. لطفاً مجدداً تلاش کنید.');
-                })
-                .finally(() => {
+                // اضافه کردن نوع فرم
+                let formTypeInput = document.createElement('input');
+                formTypeInput.type = 'hidden';
+                formTypeInput.name = 'formType';
+                formTypeInput.value = 'refund';
+                this.appendChild(formTypeInput);
+                
+                // نمایش پیام موفقیت قبل از ارسال
+                setTimeout(() => {
+                    alert(`درخواست شما با موفقیت ثبت شد.\nکد پیگیری: ${trackingCode}\nتاریخ بلیط: ${ticketDate}\n\nلطفاً این کد را یادداشت کنید.`);
+                    
+                    // فرم به طور خودکار ارسال خواهد شد
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                });
+                }, 1000);
             });
 
-            // فرم پیگیری - کد کاملاً تصحیح شده
+            // فرم پیگیری
             document.getElementById('trackingForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
                 const submitBtn = this.querySelector('.submit-btn');
                 const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'در حال جستجو...';
                 submitBtn.disabled = true;
                 
-                const formData = new FormData(this);
-                formData.append('formType', 'tracking');
+                // اضافه کردن نوع فرم
+                let formTypeInput = document.createElement('input');
+                formTypeInput.type = 'hidden';
+                formTypeInput.name = 'formType';
+                formTypeInput.value = 'tracking';
+                this.appendChild(formTypeInput);
                 
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('خطا در ارتباط با سرور');
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    const resultDiv = document.getElementById('trackingResult');
+                const resultDiv = document.getElementById('trackingResult');
+                
+                setTimeout(() => {
                     resultDiv.style.display = 'block';
+                    resultDiv.innerHTML = '<h4>نتیجه پیگیری:</h4><p>اطلاعات درخواست شما در حال بررسی است...</p>';
                     
-                    let resultContent = '';
-                    
-                    try {
-                        // سعی کنید JSON parse کنید
-                        const jsonResponse = JSON.parse(data);
-                        
-                        if (jsonResponse.message === "Workflow was started" || jsonResponse.status === "started") {
-                            resultContent = `
-                                <div class="warning-message">
-                                    <h4>⚠️ سیستم پیگیری در حال راه‌اندازی</h4>
-                                    <p><strong>درخواست شما دریافت شد</strong> اما سیستم پیگیری هنوز کاملاً پیکربندی نشده است.</p>
-                                    <p>لطفاً چند دقیقه دیگر مجدداً تلاش کنید یا با پشتیبانی تماس بگیرید.</p>
-                                    <p><strong>کد پیگیری:</strong> ${document.getElementById('trackingCode').value}</p>
-                                </div>
-                            `;
-                        } else if (jsonResponse.found === true || jsonResponse.status === "found") {
-                            // اگر درخواست پیدا شد
-                            resultContent = `
-                                <div class="success-message">
-                                    <h4>✅ درخواست شما یافت شد</h4>
-                                    <p><strong>کد پیگیری:</strong> ${jsonResponse.trackingCode || document.getElementById('trackingCode').value}</p>
-                                    <p><strong>وضعیت:</strong> ${jsonResponse.requestStatus || 'در حال بررسی'}</p>
-                                    <p><strong>تاریخ ثبت:</strong> ${jsonResponse.submitDate || 'نامشخص'}</p>
-                                    <p><strong>نام متقاضی:</strong> ${jsonResponse.applicantName || 'نامشخص'}</p>
-                                    ${jsonResponse.description ? `<p><strong>توضیحات:</strong> ${jsonResponse.description}</p>` : ''}
-                                    ${jsonResponse.estimatedTime ? `<p><strong>زمان تخمینی پاسخ:</strong> ${jsonResponse.estimatedTime}</p>` : ''}
-                                </div>
-                            `;
-                        } else if (jsonResponse.found === false || jsonResponse.status === "not_found") {
-                            // اگر درخواست پیدا نشد
-                            resultContent = `
-                                <div class="error-message">
-                                    <h4>❌ درخواستی با این مشخصات یافت نشد</h4>
-                                    <p>کد پیگیری یا شماره موبایل وارد شده صحیح نیست.</p>
-                                    <p><strong>بررسی کنید:</strong></p>
-                                    <ul style="margin: 10px 0; padding-right: 20px;">
-                                        <li>کد پیگیری را صحیح وارد کرده‌اید</li>
-                                        <li>شماره موبایل همان شماره‌ای است که هنگام ثبت درخواست استفاده کردید</li>
-                                    </ul>
-                                    <p>در صورت اطمینان از صحت اطلاعات، با پشتیبانی تماس بگیرید.</p>
-                                </div>
-                            `;
-                        } else {
-                            // پاسخ نامشخص
-                            resultContent = `
-                                <div class="info-message">
-                                    <h4>📋 اطلاعات دریافت شده</h4>
-                                    <pre style="background: #f8fafc; padding: 10px; border-radius: 5px; overflow-x: auto; font-size: 12px;">${JSON.stringify(jsonResponse, null, 2)}</pre>
-                                </div>
-                            `;
-                        }
-                    } catch (jsonError) {
-                        // اگر JSON نبود، متن ساده بررسی کنید
-                        if (data.includes("Workflow was started") || data.includes("started")) {
-                            resultContent = `
-                                <div class="warning-message">
-                                    <h4>⚠️ سیستم پیگیری فعال نیست</h4>
-                                    <p><strong>درخواست شما دریافت شد</strong> اما سیستم پیگیری هنوز پیکربندی نشده است.</p>
-                                    <p>این پیام نشان می‌دهد که وب‌هوک n8n فقط workflow را شروع کرده و منطق پیگیری را اجرا نکرده است.</p>
-                                    <p><strong>کد پیگیری شما:</strong> ${document.getElementById('trackingCode').value}</p>
-                                    <p>لطفاً با پشتیبانی تماس بگیرید.</p>
-                                </div>
-                            `;
-                        } else {
-                            resultContent = `
-                                <div class="info-message">
-                                    <h4>📋 پاسخ سرور</h4>
-                                    <p>${data}</p>
-                                </div>
-                            `;
-                        }
-                    }
-                    
-                    resultDiv.innerHTML = resultContent;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    const resultDiv = document.getElementById('trackingResult');
-                    resultDiv.style.display = 'block';
-                    resultDiv.innerHTML = `
-                        <div class="error-message">
-                            <h4>❌ خطا در دریافت اطلاعات</h4>
-                            <p><strong>علت احتمالی:</strong></p>
-                            <ul style="margin: 10px 0; padding-right: 20px;">
-                                <li>مشکل در اتصال اینترنت</li>
-                                <li>سرور موقتاً در دسترس نیست</li>
-                                <li>مشکل فنی در سیستم</li>
-                            </ul>
-                            <p>لطفاً چند لحظه صبر کرده و مجدداً تلاش کنید.</p>
-                        </div>
-                    `;
-                })
-                .finally(() => {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                });
+                    
+                    // فرم به طور خودکار ارسال خواهد شد
+                }, 1000);
             });
         });
     </script>
 </body>
 </html>
-
