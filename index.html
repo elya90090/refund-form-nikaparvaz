@@ -1272,7 +1272,7 @@
                 });
             });
 
-            // فرم استرداد - پیام ساده شده
+            // فرم استرداد
             document.getElementById('refundForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -1321,7 +1321,7 @@
                 });
             });
 
-            // فرم پیگیری - پیام ساده شده
+            // فرم پیگیری - اصلاح شده برای ارسال واقعی
             document.getElementById('trackingForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -1333,21 +1333,50 @@
                 const formData = new FormData(this);
                 formData.append('formType', 'tracking');
                 
-                // نمایش پیام ساده
-                setTimeout(() => {
+                // ارسال واقعی به webhook
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        const resultDiv = document.getElementById('trackingResult');
+                        resultDiv.style.display = 'block';
+                        
+                        resultDiv.innerHTML = `
+                            <div class="success-message">
+                                <h4>✅ درخواست پیگیری ارسال شد</h4>
+                                <p><strong>درخواست پیگیری شما با موفقیت ثبت شد. پاسخ از طریق پیامک یا تماس تلفنی اعلام خواهد شد.</strong></p>
+                            </div>
+                        `;
+                    } else {
+                        const resultDiv = document.getElementById('trackingResult');
+                        resultDiv.style.display = 'block';
+                        
+                        resultDiv.innerHTML = `
+                            <div class="error-message">
+                                <h4>❌ خطا در ارسال درخواست</h4>
+                                <p><strong>خطا در ارسال درخواست پیگیری. لطفاً مجدداً تلاش کنید.</strong></p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                     const resultDiv = document.getElementById('trackingResult');
                     resultDiv.style.display = 'block';
                     
                     resultDiv.innerHTML = `
-                        <div class="info-message">
-                            <h4>📋 وضعیت درخواست</h4>
-                            <p><strong>درخواست شما دریافت شد منتظر پاسخ باشید</strong></p>
+                        <div class="error-message">
+                            <h4>❌ خطا در اتصال</h4>
+                            <p><strong>خطا در اتصال به سرور. لطفاً مجدداً تلاش کنید.</strong></p>
                         </div>
                     `;
-                    
+                })
+                .finally(() => {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                }, 2000);
+                });
             });
         });
     </script>
