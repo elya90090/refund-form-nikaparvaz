@@ -823,6 +823,9 @@
                                         <option value="قطار">قطار</option>
                                         <option value="اتوبوس">اتوبوس</option>
                                         <option value="تور">تور</option>
+                                        <option value="هتل">هتل</option>
+                                        <option value="گشت">گشت</option>
+                                        <option value="ترانسفر">ترانسفر</option>
                                         <option value="بیمه مسافرتی">بیمه مسافرتی</option>
                                         <option value="وجه پول">وجه پول</option>
                                     </select>
@@ -880,7 +883,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="ticketDate">تاریخ بلیط <span class="required">*</span></label>
+                                    <label for="ticketDate">تاریخ خدمت <span class="required">*</span></label>
                                     <div class="date-input">
                                         <input type="text" id="ticketDate" name="ticketDate" placeholder="1404/05/28" pattern="[0-9]{4}/[0-9]{2}/[0-9]{2}" required maxlength="10">
                                     </div>
@@ -1275,7 +1278,7 @@
                 const ticketDate = document.getElementById('ticketDate').value;
                 
                 if (!ticketDate || !ticketDate.match(/^\d{4}\/\d{2}\/\d{2}$/)) {
-                    alert('لطفاً تاریخ بلیط را در فرمت صحیح وارد کنید (مثال: 1404/05/28)');
+                    alert('لطفاً تاریخ خدمت را در فرمت صحیح وارد کنید (مثال: 1404/05/28)');
                     return;
                 }
                 
@@ -1349,10 +1352,9 @@
                                 <h4>✅ درخواست پیگیری ارسال شد</h4>
                                 <p><strong>کد پیگیری: ${formData.get('trackingCode')}</strong></p>
                                 <p><strong>شماره موبایل: ${formData.get('trackingMobile')}</strong></p>
-                                <p>درخواست پیگیری شما با موفقیت ثبت شد. پاسخ از طریق پیامک یا تماس تلفنی اعلام خواهد شد.</p>
+                                <p>درخواست پیگیری شما با موفقیت ثبت شد. پاسخ از طریق پیامک اعلام خواهد شد.</p>
                                 <div class="info-message" style="margin-top: 10px;">
-                                    <small>⏰ زمان ارسال: ${new Date().toLocaleString('fa-IR')}</small><br>
-                                    <small>🔗 webhook مشترک استفاده شد</small>
+                                    <small>⏰ زمان ارسال: ${new Date().toLocaleString('fa-IR')}</small>
                                 </div>
                             </div>
                         `;
